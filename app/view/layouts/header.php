@@ -7,7 +7,7 @@
 <body>
 <div class="header">header</div>
 <form>
-    <a href="<?= getURL("index/index") ?>">Главная</a>
-    <a href="<?= getURL("pages/page1") ?>">Page1</a>
-    <a href="<?= getURL("pages/page2") ?>">Page2</a>
+    <a href="<?= getURL(''); ?>">Главная</a>
+    <a href="<?= getURL('pages/page1'); ?>">Page1</a>
+    <a href="<?= getURL('pages/page2'); ?>">Page2</a>
 </form>

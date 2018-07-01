@@ -1,16 +1,24 @@
 <?php
 
-function getUser($id)
-{
-    return query("SELECT * FROM users WHERE id=" . $id);
-}
+require_once __DIR__ . '/../../core/lib/db.php';
 
-function getUserByName($login)
+function getUserByLogin($login)
 {
-    return query("SELECT * FROM users WHERE login=" . "'$login'");
+    $user = ORM::for_table('task_1_auth')
+               ->where('login', $login)
+               ->find_array();
+
+    return $user;
 }
 
 function createUser($login, $password)
 {
-    return execute("INSERT INTO users (login, password) VALUES ('$login','$password')");
+    $createUser = ORM::for_table('task_1_auth')->create();
+    $createUser->set('login', $login)->set('password', $password)->save();
+
+    if ($id = $createUser->id()) {
+        return true;
+    } else {
+        return false;
+    }
 }

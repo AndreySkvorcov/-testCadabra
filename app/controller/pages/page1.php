@@ -1,5 +1,3 @@
 <?php
-function index()
-{
-    view('pages/page1');
-}
+
+view('/pages/page1');

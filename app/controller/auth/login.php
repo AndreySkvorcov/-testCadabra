@@ -1,23 +1,21 @@
 <?php
 
-function index()
-{
-    if ($_POST) {
-        require_once BASE_DIR . '/app/model/users.php';
+if ($_POST) {
+    require_once MODELS . '/users.php';
 
-        if ($user = getUserByName($_POST['login'])) {
-            if ($user['password'] == md5($_POST['password'])) {
-                if (isset($_POST['rememberme'])) {
-                    setcookie(session_name(), session_id(), time() + 60 * 60 * 24 * 30, '/');
-                }
-                $_SESSION['login'] = $user['login'];
-                header("Location: /");
-            } else {
-                echo 'Неверный пароль';
+    if ($user = getUserByLogin($_POST['login'])) {
+        if ($user[0]['password'] == crypt($_POST['password'], require_once __DIR__ . '/../../../core/lib/getSalt.php')) {
+            if (isset($_POST['rememberme'])) {
+                setcookie(session_name(), session_id(), time() + 60 * 60 * 24 * 30, '/');
             }
+            $_SESSION['login'] = $user[0]['login'];
+            header("Location: /");
         } else {
-            echo 'Не верный логин';
+            echo 'Неверный пароль';
         }
+    } else {
+        echo 'Не верный логин';
     }
-    view('auth/login');
 }
+
+view('/auth/login');
